@@ -1,10 +1,15 @@
 [project]
 name = "cybershield-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "Servidor MCP de ciberseguridad con herramientas para firewall, red y análisis de logs"
 authors = ["Matias Palomino Luna <jmatiaspalominoluna@gmail.com>"]
 requires-python = ">=3.10"
 
 dependencies = [
     "mcp[cli]",
+    "fastapi",
+    "uvicorn",
+    "requests",
+    "langchain",
+    "langchain-ollama"
 ]
