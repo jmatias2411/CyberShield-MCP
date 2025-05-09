@@ -41,7 +41,8 @@ cybershield_mcp/
 │   ├── hardening.py        # Fortalecimiento del sistema
 │   ├── agent_response.py   # Acciones automáticas y diagnóstico rápido
 │   ├── network_watch.py    # Conexiones activas y detección de IPs raras
-│   └── eventlog_analyzer.py # Revisión de eventos de seguridad (logins fallidos, privilegios)
+│   ├── eventlog_analyzer.py # Revisión de eventos de seguridad (logins fallidos, privilegios)
+│   └── processes.py        # Escaneo y gestión de procesos activos
 │
 ├── resources/
 │   ├── __init__.py
@@ -57,6 +58,8 @@ cybershield_mcp/
 │
 ├── fastapi_mcp_server.py   # Exposición HTTP de herramientas MCP para integración externa
 ├── agent_langchain.py      # Agente IA con LangChain + Ollama usando MCP vía FastAPI
+├── Dockerfile              # Imagen Docker del servidor FastAPI
+├── docker-compose.yml      # Despliegue simplificado con Docker Compose
 ```
 
 ---
@@ -103,6 +106,31 @@ python agent_langchain.py
 
 ---
 
+## 🐳 Integración con Docker
+
+### Dockerfile
+
+Ya incluido en el proyecto. Crea una imagen del servidor FastAPI para correr en cualquier entorno.
+
+### Para construir y correr:
+```bash
+docker build -t cybershield-api .
+docker run -p 4242:4242 --name cybershield cybershield-api
+```
+
+### O con `docker-compose`:
+```bash
+docker-compose up --build
+```
+
+Esto te da:
+- Reproducibilidad
+- Despliegue rápido
+- Entorno controlado
+- Posibilidad de llevar tu MCP a servidores Linux sin instalación directa
+
+---
+
 ## 🧪 Testing con MCP Inspector
 
 Corré:
@@ -140,6 +168,7 @@ Podés ver:
 ✅ Ejecutar comandos críticos mediante IA  
 ✅ Fortalecer el sistema y reducir superficie de ataque  
 ✅ Coordinar respuestas desde agentes IA o modelos conversacionales  
-✅ Exponer herramientas como endpoints HTTP para integraciones más amplias
+✅ Exponer herramientas como endpoints HTTP para integraciones más amplias  
+✅ Desplegarlo fácilmente en cualquier entorno con Docker
 
 ¿Listo para una defensa con cerebro? Clonalo, conectalo con Claude o tu agente LangChain, ¡y empezá a blindar tu sistema! 💥
