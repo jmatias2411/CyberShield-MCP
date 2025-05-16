@@ -3,7 +3,7 @@ version: '3.9'
 services:
   cybershield:
     build: .
-    container_name: cybershield-api
+    container_name: cybershield-mcp
     ports:
       - "4242:4242"
     restart: unless-stopped

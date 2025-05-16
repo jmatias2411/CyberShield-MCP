@@ -90,7 +90,7 @@ uv run mcp dev server.py
 
 1. Levantar el servidor FastAPI:
 ```bash
-uvicorn fastapi_mcp_server:app --port 4242
+uvicorn fastapi_mcp_server:app --reload --port 4242
 ```
 
 2. Usar `agent_langchain.py` para lanzar un agente con herramientas como:

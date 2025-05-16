@@ -1,16 +1,23 @@
-from fastapi import FastAPI, Query
+# fastapi_mcp_server.py
+
+from fastapi import FastAPI, Request
+import os
+import json
+
+# ─── Herramientas MCP ──────────────────────────────────────────
 from tools.firewall import block_port, block_ip, unblock_port, unblock_ip, list_firewall_rules
 from tools.diagnostics import do_ping, scan_network
-from tools.logs import analyze_logs  # normalmente esta sería async
+from tools.logs import analyze_logs
 from tools.hardening import disable_network_discovery, list_local_users, show_password_policy
 from tools.agent_response import auto_block_ip, get_defense_log, quarantine_mode, system_diagnostic_summary
 from tools.processes import list_processes, list_suspicious_processes, kill_process
 from tools.network_watch import list_active_connections, detect_suspicious_ips
 from tools.eventlog_analyzer import get_recent_failed_logins, get_privilege_changes
 
-app = FastAPI(title="CyberShield API", description="Exposición HTTP de herramientas MCP")
+# ─── App FastAPI ───────────────────────────────────────────────
+app = FastAPI(title="CyberShield MCP", description="Servidor MCP con herramientas defensivas")
 
-# FIREWALL
+# ─── FIREWALL ───────────────────────────────────────────────────
 @app.get("/tools/block_port")
 def api_block_port(port: int):
     return {"result": block_port(port)}
@@ -31,7 +38,7 @@ def api_unblock_ip(ip: str):
 def api_list_firewall_rules():
     return {"result": list_firewall_rules()}
 
-# RED
+# ─── RED ────────────────────────────────────────────────────────
 @app.get("/tools/ping")
 def api_do_ping(host: str):
     return {"result": do_ping(host)}
@@ -40,7 +47,7 @@ def api_do_ping(host: str):
 def api_scan_network(base_ip: str):
     return {"result": scan_network(base_ip)}
 
-# HARDENING
+# ─── HARDENING ──────────────────────────────────────────────────
 @app.get("/tools/disable_network_discovery")
 def api_disable_discovery():
     return {"result": disable_network_discovery()}
@@ -53,7 +60,7 @@ def api_list_users():
 def api_password_policy():
     return {"result": show_password_policy()}
 
-# PROCESOS
+# ─── PROCESOS ───────────────────────────────────────────────────
 @app.get("/tools/list_processes")
 def api_list_processes():
     return {"result": list_processes()}
@@ -66,7 +73,7 @@ def api_list_sus_procs():
 def api_kill_process(name: str):
     return {"result": kill_process(name)}
 
-# NETWORK WATCH
+# ─── NETWORK WATCH ──────────────────────────────────────────────
 @app.get("/tools/active_connections")
 def api_active_connections():
     return {"result": list_active_connections()}
@@ -75,7 +82,7 @@ def api_active_connections():
 def api_suspicious_ips():
     return {"result": detect_suspicious_ips()}
 
-# EVENTOS DE SEGURIDAD
+# ─── EVENTOS DE SEGURIDAD ───────────────────────────────────────
 @app.get("/tools/failed_logins")
 def api_failed_logins():
     return {"result": get_recent_failed_logins()}
@@ -84,7 +91,7 @@ def api_failed_logins():
 def api_privilege_changes():
     return {"result": get_privilege_changes()}
 
-# DEFENSA INTELIGENTE
+# ─── DEFENSA INTELIGENTE ────────────────────────────────────────
 @app.get("/tools/auto_block_ip")
 def api_auto_block(ip: str):
     return {"result": auto_block_ip(ip)}
@@ -97,7 +104,23 @@ def api_quarantine():
 def api_system_diagnostic():
     return {"result": system_diagnostic_summary()}
 
-# LOG DE DEFENSA
+# ─── LOG DE DEFENSA ─────────────────────────────────────────────
 @app.get("/resources/defense_log")
 def api_get_defense_log():
     return {"result": get_defense_log()}
+
+# ─── STATUS (desde agentes) ─────────────────────────────────────
+@app.post("/status")
+async def recibir_status(data: dict):
+    os.makedirs("data", exist_ok=True)
+    with open("data/status.json", "w") as f:
+        json.dump(data, f, indent=2)
+    return {"message": "Status recibido"}
+
+@app.get("/status")
+def devolver_status():
+    try:
+        with open("data/status.json", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {"error": "status.json no encontrado"}
