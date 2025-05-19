@@ -174,3 +174,6 @@ Podés ver:
 ✅ Desplegarlo fácilmente en cualquier entorno con Docker
 
 ¿Listo para una defensa con cerebro? Clonalo, conectalo con Claude o tu agente LangChain, ¡y empezá a blindar tu sistema! 💥
+
+
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/8f6b0a03-1593-4ed6-9d20-9e664f6c74e9)
