@@ -1,5 +1,3 @@
-[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/jmatias2411-cybershield-mcp-badge.png)](https://mseep.ai/app/jmatias2411-cybershield-mcp)
-
 # 🛡️ CyberShield MCP — Servidor MCP de Defensa Autónoma (Windows)
 
 CyberShield MCP es un servidor MCP (Model Context Protocol) completamente funcional diseñado para ejecutar herramientas defensivas, consultar recursos del sistema y tomar decisiones de seguridad con apoyo de inteligencia artificial.
@@ -175,5 +173,6 @@ Podés ver:
 
 ¿Listo para una defensa con cerebro? Clonalo, conectalo con Claude o tu agente LangChain, ¡y empezá a blindar tu sistema! 💥
 
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/jmatias2411-cybershield-mcp-badge.png)](https://mseep.ai/app/jmatias2411-cybershield-mcp)
 
 [![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/8f6b0a03-1593-4ed6-9d20-9e664f6c74e9)
